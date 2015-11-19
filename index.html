@@ -1,0 +1,1515 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>PageBuilder</title>
+		<link href="css/jquery-ui-1.8.23.custom.css" rel="stylesheet" />		
+		<link href="css/jquery.filterselector.css?v=201301061400" rel="stylesheet" />
+		<link href="css/jquery.box.css?v=201301061400" rel="stylesheet" />
+		<link href="js/ext/mCustomScrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
+		<link href="js/ext/fileuploader/fileuploader.min.css" rel="stylesheet" />
+		<link href="css/app.css?v=201307191840" rel="stylesheet" />
+	</head>
+	<body class="grid design">
+		<div id="header">
+			<div class="h-t">
+				<div class="h-l l">
+					<a href="javascript:void(0);" class="btn btn-blue btn-pageinfo">
+						<div class="l"></div>
+						<div class="l-c"><div class="h-icon h-icon-pageinfo"></div><span>页面信息</span></div>
+						<div class="r"></div>
+					</a>
+					<a href="javascript:void(0);" class="btn btn-green btn-publish">
+						<div class="l"></div>
+						<div class="l-c"><div class="h-icon h-icon-publish"></div><span>完成</span></div>
+						<div class="r"></div>
+					</a>
+				</div>
+				<div class="h-l-c l-c">
+					<!--a href="javascript:void(0);" class="btn btn-screen on" title="全屏"><div class="h-icon h-icon-screen on"></div></a-->
+					<a href="javascript:void(0);" class="btn btn-undo off" title="撤销"><div class="h-icon h-icon-undo off"></div></a>
+					<a href="javascript:void(0);" class="btn btn-redo off" title="重做"><div class="h-icon h-icon-redo off"></div></a>
+					<a href="javascript:void(0);" class="btn btn-save on" title="保存"><div class="h-icon h-icon-save on"></div></a>
+				</div>
+				<div class="h-r r">
+					<select id="sel-device-size" style="display:none;" autocomplete="off">
+						<option value="_240x320">240*320</option>
+						<option value="_320x480" selected="selected">320*480</option>
+						<option value="_480x800">480*800</option>
+						<option value="_600x1024">600*1024</option>
+						<option value="_640x960">640*960</option>
+						<option value="_640x1136">640*1136</option>
+						<option value="_720x1280">720*1280</option>
+						<option value="_768x1024">768*1024</option>
+						<option value="_800x1280">800*1280</option>
+					</select>
+					<div class="h-split-line"></div>
+					<a href="javascript:void(0);" class="btn-direct"><div class="h-icon h-icon-direct"></div></a>
+					<div class="h-split-line"></div>
+					<a href="javascript:void(0);" class="btn-design"><div class="h-icon h-icon-design"></div></a>
+				</div>
+			</div>
+		</div>
+		<div id="b">
+			<div id="b-l">
+				<div id="b-l-c">
+					<!-- 页面元素容器 -->
+					<div id="userview-page" class="userview">
+						<div class="b-h">
+							<span class="b-icon b-icon-expand selected"></span>
+							页面列表
+							<a href="javascript:void(0);" class="newpage" title="新增页面"><div class="b-icon b-icon-newpage"></div></a>
+						</div>
+						<div class="b-c"></div>
+					</div>
+					<!-- 控件容器 -->
+					<div id="userview-control" class="userview">
+						<div class="b-h">
+							<span class="b-icon b-icon-expand"></span>
+							控件库
+						</div>
+						<div class="b-c"></div>
+					</div>
+					<!-- 模板库 -->
+					<div id="userview-material" class="userview">
+						<div class="b-h">
+							<span class="b-icon b-icon-expand"></span>
+							模板库
+						</div>
+						<div class="b-c"></div>
+					</div>
+				</div>
+			</div>
+			<div id="b-r" class="clearfix">
+				<div id="b-r-c">
+					<div id="phone" class="clearfix design">
+						<div class="device portrait" style="">
+							<div class="t clearfix" style="width: 406px;">
+								<div class="l"></div>
+								<div class="l-c" style="width: 206px;"></div>
+								<div class="r"></div>
+							</div>
+							<div class="m clearfix" style="width: 406px;">
+								<div class="l" style="height: 384px;"></div>
+								<div class="l-c" style="width: 320px; height: 480px;">
+									<div id="phone-drop" class="sized droptarget empty ui-droppable" style="width: 320px; height: 480px;"> </div>
+									<div class="content sized" style="width: 320px; height: 480px;">
+										<iframe id="mobile-frame" src="device.html?v=20130107151606"></iframe>
+									</div>
+								</div>
+								<div class="r" style="height: 384px;"></div>
+							</div>
+							<div class="b clearfix" style="width: 406px;">
+								<div class="l"></div>
+								<div class="l-c" style="width: 206px;"></div>
+								<div class="r"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 页面信息弹窗 -->
+		<div id="pageinfo-dialog" class="form-dialog hidden">
+			<div class="c">
+				<ul>
+					<li>
+						<div class="col1">*页面名称：</div>
+						<div><input type="text" id="templateName" autocomplete="off"/></div>
+					</li>
+					<li>
+						<div class="col1 vtop">备注：</div>
+						<div><textarea id="templateRemark" autocomplete="off" maxlength="255"></textarea></div>
+					</li>
+				</ul>
+			</div>
+			<div class="b">
+				<div class="l error-tip"></div>
+				<div class="r">
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">确定</div>
+						<div class="r"></div>
+					</a>
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">取消</div>
+						<div class="r"></div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 新增页面弹出窗 -->
+		<div id="newpage-dialog" class="form-dialog hidden">
+			<div class="c">
+				<ul>
+					<li>
+						<div class="col1">页面名称：</div>
+						<div><input type="text" name="txt_pagename" class="pn"/></div>
+					</li>					
+				</ul>
+			</div>
+			<div class="b">
+				<div class="l error-tip"></div>
+				<div class="r">
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">确定</div>
+						<div class="r"></div>
+					</a>
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">取消</div>
+						<div class="r"></div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- 共享模板页弹出窗 -->
+		<div id="sharepage-dialog" class="form-dialog hidden">
+			<div class="c">
+				<ul>
+					<li>
+						<div class="col1">页面名称：</div>
+						<div><input type="text" name="txt_pagename" class="pn"/></div>
+					</li>					
+				</ul>
+			</div>
+			<div class="b">
+				<div class="l error-tip"></div>
+				<div class="r">
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">确定</div>
+						<div class="r"></div>
+					</a>
+					<a href="javascript:void(0);" class="btn btn-blue">
+						<div class="l"></div>
+						<div class="l-c">取消</div>
+						<div class="r"></div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 控件属性容器 -->
+		<div id="property-dialog">
+			<div id="userview-property"><div id="userview-property-content"></div></div>
+		</div>
+
+		<div id="msgBox" class="hidden">
+		提示：为得到更好的用户体验，建议您使用 <a href="http://firefox.com.cn/download/" target="_brank">firefox</a> 或 <a href="https://www.google.com/intl/zh-CN/chrome/browser/" target="_brank">google chrome</a> 浏览器。
+		</div>
+						
+		<!-- templates begin-->
+		
+		<script id="template-html" type="text/x-handlebars-template">
+			<!DOCTYPE html>
+			<html>
+				<head>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1" />
+					<title>{{title}}</title>
+					<link href="jquery.mobile-1.3.0.min.css" rel="stylesheet" />
+					<link href="my.css?v=201303281610" rel="stylesheet" />		
+					&lt;script src="jquery-1.7.2.min.js"&gt;&lt;/script&gt;
+					&lt;script src="jquery.mobile-1.3.0.min.js"&gt;&lt;/script&gt;
+					&lt;script src="my.js?v=201301061400"&gt;&lt;/script&gt;
+				</head>
+				<body>{{{body}}}</body>		
+			</html>
+		</script>
+		
+		<!-- userview -->
+		<script id="template-ui-pageview" type="text/x-handlebars-template">
+			<div class="b-h">
+				<span class="b-icon b-icon-expand selected"></span> 
+				页面列表
+				<a href="javascript:void(0);" class="newpage" title="新增页面"><div class="b-icon b-icon-newpage"></div></a>
+			</div>
+			<div class="b-c">
+				<ul class="item-list">
+					<li>
+						<ul>	
+							{{#each pages}}
+							<li class="item page" data-cid="{{_id}}">
+								<a href="javascript:void(0);">
+									<div class="b-icon b-icon-expand"></div><div class="b-icon b-icon-page"></div><span>{{#ifemptystring title.value}}{{_id}}{{else}}{{title.value}}{{/ifemptystring}}</span>
+								</a>
+								<div class="button-container hidden">
+									<a href="javascript:void(0);" class="button green share">
+										<div class="l"></div>
+										<div class="l-c">共享</div>
+										<div class="r"></div>
+									</a>
+									<a href="javascript:void(0);" class="button green duplicate">
+										<div class="l"></div>
+										<div class="l-c">复制</div>
+										<div class="r"></div>
+									</a>
+									<a href="javascript:void(0);" class="button red delete">
+										<div class="l"></div>
+										<div class="l-c">删除</div>
+										<div class="r"></div>
+									</a>
+								</div>								
+							</li>
+							{{#each nodes}}
+							<li class="item control" data-cid="{{_id}}">
+								<a href="javascript:void(0);"><div class="b-icon b-icon-node"></div>{{#ifemptystring title.value}}{{_id}}{{else}}{{title.value}}{{/ifemptystring}}</a>
+								<div class="button-container hidden">
+									<a href="javascript:void(0);" class="button green duplicate">
+										<div class="l"></div>
+										<div class="l-c">复制</div>
+										<div class="r"></div>
+									</a>
+									<a href="javascript:void(0);" class="button red delete">
+										<div class="l"></div>
+										<div class="l-c">删除</div>
+										<div class="r"></div>
+									</a>
+								</div>
+							</li>
+							{{/each}}
+							{{/each}}
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</script>
+		
+		<!-- 控件模板 -->
+		<script id="template-ui-controlview" type="text/x-handlebars-template">
+			<div class="b-h">
+				<span class="b-icon b-icon-expand"></span>
+				控件库
+			</div>
+			<div class="b-c">
+				<div class="widget-tabs">
+					<ul>
+						<li>
+							<a class="l button active" href="#cat-all" data-category="ALL">
+								<div class="l"></div>
+								<div class="l-c">
+									全部
+								</div>
+								<div class="r"></div>
+							</a>
+						</li>
+						{{#each categories}}
+							<li>
+								<a class="l button" href="#cat-{{id}}" data-category="{{id}}">
+									<div class="l"></div>
+									<div class="l-c">
+										{{name}}
+									</div>
+									<div class="r"></div>
+								</a>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+				
+				<div class="widget-list-content">
+					<ul class="icon-list">
+						{{#each categories}}
+							{{#each controls}}
+								<li data-category="{{../id}}" data-cid="{{controlType}}">
+									<div cid="{{controlType}}" class="jqm-icon jqm-icon-{{controlType}}">
+									</div>
+									<div class="label">
+										{{_name}}
+									</div>
+								</li>
+							{{/each}}
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+		</script>
+
+		<!-- 模板库 -->
+		<script id="template-ui-materialview" type="text/x-handlebars-template">
+			<div class="b-h">
+				<span class="b-icon b-icon-expand"></span>
+				模板库
+			</div>
+			<div class="b-c">
+				<div class="widget-tabs">
+					<ul>
+						<li>
+							<a class="l button active" href="javascript:void(0);">
+								<div class="l"></div>
+								<div class="l-c">
+									系统模板
+								</div>
+								<div class="r"></div>
+							</a>
+						</li>
+						<li>
+							<a class="l button" href="javascript:void(0);">
+								<div class="l"></div>
+								<div class="l-c">
+									用户模板
+								</div>
+								<div class="r"></div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<ul class="item-list">
+					<li>
+						<ul>	
+							{{#each tpls}}
+							<li class="item tpl" data-cid="{{id}}">
+								<a href="javascript:void(0);">
+									<div class="b-icon b-icon-page"></div>{{title}}
+								</a>
+								<div class="button-container hidden">
+									<a href="javascript:void(0);" class="button green insert">
+										<div class="l"></div>
+										<div class="l-c">添加</div>
+										<div class="r"></div>
+									</a>
+									<a href="javascript:void(0);" class="button green insert" insert-default="true">
+										<div class="l"></div>
+										<div class="l-c">添加到首页</div>
+										<div class="r"></div>
+									</a>
+								</div>								
+							</li>
+							{{/each}}
+						</ul>
+					</li>
+				</ul>
+				<ul class="item-list hidden">
+					<li>
+						<ul>	
+							{{#each pages}}
+							<li class="item page" data-pubId="{{pbpgtemp_id}}" data-lgnid="{{lgnId}}" data-cid="{{pbpgtemp_jsoncode.id}}">
+								<a href="javascript:void(0);">
+									<div class="b-icon b-icon-page"></div>{{pbpgtemp_jsoncode.properties.title}}
+								</a>
+								<div class="button-container hidden">
+									<a href="javascript:void(0);" class="button green insert">
+										<div class="l"></div>
+										<div class="l-c">添加</div>
+										<div class="r"></div>
+									</a>
+									<a href="javascript:void(0);" class="button green insert" insert-default="true">
+										<div class="l"></div>
+										<div class="l-c">添加到首页</div>
+										<div class="r"></div>
+									</a>
+									<a href="#" class="button red delete_tpl">
+										<div class="l"></div>
+										<div class="l-c">删除</div>
+										<div class="r"></div>
+									</a>
+								</div>								
+							</li>
+							{{/each}}
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</script>
+		
+		<!-- controls -->
+		<!-- app容器 -->
+		<script id="template-control-app" type="text/x-handlebars-template">
+			<div></div>
+		</script>
+		<!-- 页面容器 -->
+		<script id="template-control-page" type="text/x-handlebars-template">
+			<div data-role="page" {{#property theme}}data-theme="{{theme.property.value}}"{{/property}} id="{{__control._id}}"></div>
+		</script>
+		<!-- 文本标题 h1-h6 -->
+		<script id="template-control-heading" type="text/x-handlebars-template">
+			<h{{{ size.property.value }}} style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">{{ text.property.value }}</h{{ size.property.value }}>
+		</script>
+		<!-- 页面头部 -->
+		<script id="template-control-pageheader" type="text/x-handlebars-template">
+			<div data-theme="{{theme.property.value}}" data-role="header" {{#property isFixed}}data-position="{{isFixed.property.value}}"{{/property}}>
+			{{#ifequal noHeading.property.value "true"}}
+				<span class="ui-title" />
+			{{/ifequal}}
+			</div> 
+		</script>
+		<!-- 页面内容 -->
+		<script id="template-control-pagecontent" type="text/x-handlebars-template">
+			<div data-role="content" style="padding-top:{{__control.parentControl.contentPadding.value.top}}px; padding-right:{{__control.parentControl.contentPadding.value.right}}px; padding-bottom:{{__control.parentControl.contentPadding.value.bottom}}px; padding-left:{{__control.parentControl.contentPadding.value.left}}px; "></div>
+		</script>		
+		<!-- 页面底部 -->
+		<script id="template-control-pagefooter" type="text/x-handlebars-template">
+			<div data-theme="{{theme.property.value}}" data-role="footer" {{#property isFixed}}data-position="{{isFixed.property.value}}"{{/property}}>
+			{{#ifequal noHeading.property.value "true"}}
+				<span class="ui-title" />
+			{{/ifequal}}
+			</div>
+		</script>
+		<!-- 导航 -->
+		<script id="template-control-navbar" type="text/x-handlebars-template">
+			<div data-role="navbar" data-iconpos="{{iconPos.property.value.align}}" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<ul>
+				{{#each items.property.value}}
+					<li><a href="{{url}}" data-theme="{{theme}}" data-icon="{{icon}}" {{#if isActive}}class="ui-btn-active ui-state-persist"{{/if}}>{{text}}</a></li>
+				{{/each}}
+				</ul>
+			</div>
+		</script>
+		<!-- 列表 -->
+		<script id="template-control-listview" type="text/x-handlebars-template">
+			<ul data-role="listview" data-divider-theme="{{dividerTheme.property.value}}" data-inset="{{displayInset.property.value}}" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				{{#ifequal isReadOnly.property.value "true"}}
+					{{#each items.property.value}}
+						{{#if isDivider}}
+							<li data-role="list-divider" role="heading">
+								{{text}}
+							</li>
+						{{else}}
+							<li data-theme="{{theme}}">{{text}}{{#if count}}<span class="ui-li-count">{{{count}}}</span>{{/if}}</li>
+						{{/if}}
+					{{/each}}
+					{{else}}
+					{{#each items.property.value}}
+						{{#if isDivider}}
+							<li data-role="list-divider" role="heading">
+								{{text}}
+							</li>
+						{{else}}
+							<li data-theme="{{theme}}"><a href="{{url}}" data-transition="{{transition}}">{{text}}{{#if count}}<span class="ui-li-count">{{{count}}}</span>{{/if}}</a></li>
+						{{/if}}
+					{{/each}}
+				{{/ifequal}}
+			</ul>
+		</script>
+		<!-- 可折叠区块 -->
+		<script id="template-control-collapsible" type="text/x-handlebars-template">
+			<div data-role="collapsible-set" data-theme="{{headerTheme.property.value}}" data-content-theme="{{contentTheme.property.value}}" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+			</div>
+		</script>
+		<!-- 可折叠内容 -->
+		<script id="template-control-collapsiblecontent" type="text/x-handlebars-template">
+			<div data-role="collapsible" data-collapsed="{{isCollapsed.property.value}}">
+				<h3>{{headerText.property.value}}</h3>
+			</div>
+		</script>
+		<!-- 表格 -->
+		<script id="template-control-grid" type="text/x-handlebars-template">
+			<div class="ui-grid-{{#gridclass columns.property.value}}{{/gridclass}}" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;"></div>
+		</script>
+		<!-- 单元格 -->
+		<script id="template-control-gridblock" type="text/x-handlebars-template">
+			<div></div>
+		</script>
+		<!-- 链接 -->
+		<script id="template-control-link" type="text/x-handlebars-template">
+		  	<div style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<a href="{{url.property.value}}"{{#property openNewWindow}} target="_blank"{{/property}} data-transition="{{transition.property.value}}" style="font-family:{{fontFamily.property.value}}; font-size:{{fontSize.property.value}}; font-style:{{fontStyle.property.value.fontStyle}}; font-weight:{{fontStyle.property.value.fontWeight}}; text-decoration:{{fontStyle.property.value.textDecoration}}; color:{{fontStyle.property.value.fontColor}};">{{text.property.value}}</a>
+		  	</div>
+		</script>
+		<!-- 普通按钮 -->
+		<script id="template-control-button" type="text/x-handlebars-template">
+			<a data-role="button" {{#property isInline}}data-inline="{{isInline.property.value}}"{{/property}} data-transition="{{transition.property.value}}" {{#property theme}}data-theme="{{theme.property.value}}"{{/property}} href="{{url.property.value}}" {{#if icon.property.value.icon}}data-icon="{{icon.property.value.icon}}" data-iconpos="{{icon.property.value.align}}"{{#if icon.property.value.size}} data-iconsize="{{icon.property.value.size}}"{{/if}}{{/if}}{{#property extraClasses}} class="{{extraClasses.property.value}}"{{/property}} style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				{{{ text.property.value }}}
+			</a>
+		</script>
+		<!-- 文本域 -->
+		<script id="template-control-textblock" type="text/x-handlebars-template">
+			<div>{{{ text.property.value }}}</div>
+		</script>
+		
+		<!--滑动条-->
+		<script id="template-control-slider" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<fieldset data-role="controlgroup">
+					<label for="{{__control._id}}">{{label.property.value}}</label>
+					<input type="range" name="slider" id="{{__control._id}}" value="{{value.property.value}}" min="{{min.property.value}}" max="{{max.property.value}}" data-highlight="{{isHighlight.property.value}}" data-theme="{{theme.property.value}}" data-track-theme="{{trackTheme.property.value}}"/>
+				</fieldset>
+			</div>
+		</script>
+		
+		<!--视频-->
+		<script id="template-control-video" type="text/x-handlebars-template">
+			{{#ifemptystring video.property.value.url}}
+				<div style="display: block; position:relative;text-align: {{video.property.value.align}}; width: 100%; height:150px;">
+					<img src="images/video-holder.png" alt="image" style="position: absolute; top: 50%; left: 50%; margin-left: -145px; margin-top: -75px;"/>
+				</div>
+			{{else}}
+				<div style="width:{{video.property.value.width.value}}{{video.property.value.width.units}};height:175px;">
+					<div id="video" style="width: {{video.property.value.width.value}}{{video.property.value.width.units}}; height:150px;">
+						<object width="100%" height="100%" type="application/x-shockwave-flash" data="swf/flowplayer.commercial.swf" name="fp_{{_random.property.value}}_api" id="fp_{{_random.property.value}}_api">
+							<param value="true" name="allowfullscreen">
+							<param name="wmode" value="opaque">
+							<param value="always" name="allowscriptaccess">
+							<param name="src" value="swf/flowplayer.commercial.swf">
+							<param name="movie" value="swf/flowplayer.commercial.swf">
+							<param value="high" name="quality">
+							<param value="#000000" name="bgcolor">
+							<param value='config={"plugins":{"controls":{"volume":true}},"playerId":"fp_09985227","clip":{"url":"{{video.property.value.url}}","autoPlay": false},"playlist":[{"url":"{{video.property.value.url}}"}]}' name="flashvars">
+						</object>
+					</div>
+					<p style="padding:0;margin:5px 0;">视频大小：{{video.property.value.fileSize}}</p>
+				</div>
+			{{/ifemptystring}}
+		</script>
+		
+		<script id="template-control-video-final" type="text/x-handlebars-template">
+			<div id="video" style="width: {{video.property.value.width.value}}{{video.property.value.width.units}}; height: 150px;">
+				<video style="display:block;width: {{video.property.value.width.value}}{{video.property.value.width.units}}; height: 150px;" src="{{video.property.value.url}}" type="video/mp4" poster="{{video.property.value.thumbnail}}" controls="controls" preload="none"></video>
+			</div>
+			<p style="padding:0;margin:5px 0;">视频大小：{{video.property.value.fileSize}}</p>
+		</script>
+		
+		<!--音频-->
+		<script id="template-control-audio" type="text/x-handlebars-template">			
+			{{#ifemptystring audio.property.value.url}}
+				<div style="text-align: {{audio.property.value.align}}; position:relative;width: 100%; height: 28px">
+					<img src="images/audio-holder.png" alt="image" style="position: absolute; top: 50%; left: 50%; margin-left: -145px; margin-top: -14px" />
+				</div>	
+			{{else}}
+				<div style="width: {{audio.property.value.width.value}}{{audio.property.value.width.units}};height:58px;">
+					<div id="audio" style="width: {{audio.property.value.width.value}}{{audio.property.value.width.units}}; height:28px">
+						<object width="100%" height="28px" type="application/x-shockwave-flash" data="swf/flowplayer.commercial.swf" name="mb_api" id="mb_api">
+							<param name="movie" value="swf/flowplayer.commercial.swf"><!-- IE8-->
+							<param name="wmode" value="opaque">
+							<param name="src" value="swf/flowplayer.commercial.swf"> <!-- IE8-->
+							<param value="true" name="allowfullscreen">
+							<param value="always" name="allowscriptaccess">
+							<param value="high" name="quality">
+							<param value="#000000" name="bgcolor">
+							<param value='config={"plugins":{"controls":{"fullscreen":false,"height":30,"autoHide":false},"audio":{"url":"swf/flowplayer.audio-3.2.10.swf"}},"clip":{"autoPlay":false,"url":"{{audio.property.value.url}}"},"playerId":"mb","playlist":[{"autoPlay":false,"url":"{{audio.property.value.url}}"}]}' name="flashvars">
+						</object>
+						<p style="padding:0;margin:5px 0;">音频大小：{{audio.property.value.fileSize}}</p>
+					</div>
+				</div>	
+			{{/ifemptystring}}
+		</script>
+		
+		<script id="template-control-audio-final" type="text/x-handlebars-template">
+				<div id="audio" style="width: {{audio.property.value.width.value}}{{audio.property.value.width.units}}; height:28px">
+					<audio src="{{audio.property.value.url}}" style="display:block;width: {{audio.property.value.width.value}}{{audio.property.value.width.units}}; height:28px" controls preload></audio>
+				</div>
+				<p style="padding:0;margin:5px 0;">音频大小：{{audio.property.value.fileSize}}</p>
+		</script>
+		
+		<!--图片-->
+		<script id="template-control-image" type="text/x-handlebars-template">			
+			{{#ifemptystring image.property.value.url}}
+				{{#ifequal image.property.value.displayMode "block"}}
+					<div style="width: {{image.property.value.width.value}}{{image.property.value.width.units}}; height: {{image.property.value.height.value}}{{image.property.value.height.units}}; position: relative; background-color: #fbfbfb; border: 1px solid #b8b8b8;">
+						<img src="images/image.png" alt="image" style="position: absolute; top: 50%; left: 50%; margin-left: -16px; margin-top: -18px"/>
+					</div>
+				{{else}}
+					<img src="images/image.png" alt="image"/>
+				{{/ifequal}}
+			{{else}}
+				{{#ifequal image.property.value.displayMode "block"}}
+					<div style="text-align: {{image.property.value.align}}; width: 100%; height: {{image.property.value.height.value}}{{image.property.value.height.units}}">
+						<a href="{{image.property.value.link}}"><img style="width: {{image.property.value.width.value}}{{image.property.value.width.units}}; height: {{image.property.value.height.value}}{{image.property.value.height.units}}; border: 0;" src="{{image.property.value.url}}"/></a>
+					</div>
+				{{else}}
+					<div style="display: inline-block; text-align: {{image.property.value.align}}; width: {{image.property.value.width.value}}{{image.property.value.width.units}}; height: {{image.property.value.height.value}}{{image.property.value.height.units}}">
+						<a href="{{image.property.value.link}}"><img style="width: {{image.property.value.width.value}}{{image.property.value.width.units}}; height: {{image.property.value.height.value}}{{image.property.value.height.units}}; border: 0;" src="{{image.property.value.url}}"/></a>
+					</div>
+				{{/ifequal}}					
+			{{/ifemptystring}}
+		</script>
+		<!-- 提交按钮 -->
+		<script id="template-control-submitbutton" type="text/x-handlebars-template">
+			<input type="submit"{{#property isInline}}data-inline="{{isInline.property.value}}"{{/property}} {{#property theme}}data-theme="{{theme.property.value}}"{{/property}} {{#if icon.property.value.icon}}data-icon="{{icon.property.value.icon}}" data-iconpos="{{icon.property.value.align}}"{{/if}} value="{{{ text.property.value }}}"{{#property isMini}} data-mini="{{isMini.property.value}}"{{/property}} />
+		</script>
+		<!-- 表单form -->
+		<script id="template-control-form" type="text/x-handlebars-template">
+			<form action="{{url.property.value}}"{{#property action}} method="{{action.property.value}}"{{/property}}{{#property ajax}} data-ajax="false"{{/property}} style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				{{#ifempty __control.children}}
+					&lt;form&gt;
+				{{/ifempty}}
+			</form>
+		</script>
+		<!-- 单行文本输入框 -->
+		<script id="template-control-textinput" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<fieldset data-role="controlgroup">
+					<label for="{{__control._id}}">{{label.property.value}}</label>
+					<input name="{{nameField.property.value}}" id="{{__control._id}}" placeholder="{{placeholder.property.value}}" value="{{text.property.value}}" type="{{type.property.value}}"/>
+				</fieldset>
+			</div>
+		</script>
+		<!-- 多行文本输入框 -->
+		<script id="template-control-textarea" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<fieldset data-role="controlgroup">
+					<label for="{{__control._id}}">{{label.property.value}}</label>
+					<textarea name="{{nameField.property.value}}" style="height:{{textareaHeight.property.value}}px" id="{{__control._id}}" placeholder="{{placeholder.property.value}}">{{text.property.value}}</textarea>
+				</fieldset>
+			</div>
+		</script>
+		
+		<!-- 单选按钮 -->
+		<script id="template-control-radiobuttons" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<fieldset data-role="controlgroup" data-type="{{ orientation.property.value }}"{{#property isMini}} data-mini="{{isMini.property.value}}"{{/property}}>
+					<legend>{{label.property.value}}</legend>
+				</fieldset>
+			</div>
+		</script>
+		<script id="template-control-radio" type="text/x-handlebars-template">
+			<input name="{{__control.parentControl.nameField}}" id="{{__control._id}}" value="{{value.property.value}}" type="radio" />
+			<label for="{{__control._id}}">{{label.property.value}}</label>
+		</script>
+		
+		<!-- 复选按钮 -->
+		<script id="template-control-checkboxes" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<fieldset data-role="controlgroup" data-type="{{ orientation.property.value }}"{{#property isMini}} data-mini="{{isMini.property.value}}"{{/property}}>
+					<legend>{{label.property.value}}</legend>
+				</fieldset>
+			</div>
+		</script>
+		<script id="template-control-checkbox" type="text/x-handlebars-template">
+			<input name="{{__control.parentControl.nameField}}" id="{{__control._id}}" value="{{value.property.value}}" type="checkbox" />
+			<label for="{{__control._id}}">{{label.property.value}}</label>
+		</script>
+		
+		<!-- 下拉选择框 -->
+		<script id="template-control-selectmenu" type="text/x-handlebars-template">
+			<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+				<label for="{{__control._id}}">{{ label.property.value }}</label>
+				<select{{#property isNative}} data-native-menu="{{isNative.property.value}}"{{/property}} name="{{__control._id}}" id="{{__control._id}}"{{#property theme}} data-theme="{{theme.property.value}}"{{/property}}{{#property isMini}} data-mini="{{isMini.property.value}}"{{/property}}>
+					{{#each items.property.value}}
+						<option value="{{value}}">{{text}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</script>
+
+		<!--地图-->
+		<script id="template-control-googlemaps" type="text/x-handlebars-template">
+			<img src="https://maps.googleapis.com/maps/api/staticmap?center={{loc.property.value}}&zoom={{zoom.property.value}}&size={{width.property.value}}x{{height.property.value}}&markers={{markerparams markers.property.value}}&sensor=false" width="{{width.property.value}}" height="{{height.property.value}}" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;"/>
+		</script>
+
+		<!-- 数据表格 -->
+		<script id="template-control-datatable" type="text/x-handlebars-template">
+			<!--<div data-role="fieldcontain">
+		  	<table id="{{__control._id}}" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-source="{{datasource.property.value}}" data-mode="columntoggle" data-column-btn-theme="b" data-column-btn-text="更多列..." data-column-popup-theme="a">
+		    	<thead>
+				    <tr class="ui-bar-d">
+				    	{{#each columns.property.value}}
+				    	<th data-priority="{{priority}}" column-name="{{columnValue}}">{{columnText}}</th>
+				        {{/each}}
+				    </tr>
+		    	</thead>
+		    	<tbody>
+		    		<tr>
+		    			{{#each columns.property.value}}
+		    			<td> -- </td>
+		    			{{/each}}
+		    		</tr>
+		    	</tbody>
+		  	</table>
+		  	</div>-->
+		  	<div data-role="fieldcontain" style="margin-top:{{margin.property.value.top}}px; margin-right:{{margin.property.value.right}}px; margin-bottom:{{margin.property.value.bottom}}px; margin-left:{{margin.property.value.left}}px;">
+		  	<table id="{{__control._id}}" class="ui-responsive table-stroke" data-role="table" data-source="{{datasource.property.value}}" data-mode="reflow" >
+		    	<thead>
+				    <tr>
+				    	{{#each columns.property.value}}
+				    	<th data-priority="{{priority}}" column-name="{{columnValue}}">{{columnText}}</th>
+				        {{/each}}
+				    </tr>
+		    	</thead>
+		    	<tbody>
+		    		<tr>
+		    			{{#each columns.property.value}}
+		    			<td> -- </td>
+		    			{{/each}}
+		    		</tr>
+		    	</tbody>
+		  	</table>
+		  	</div>
+		</script>
+
+		<script id="template-control-html" type="text/x-handlebars-template">
+			<div id="{{__control._id}}" data-role="html" style="position:relative; min-height:20px;">{{{htmlsource.property.value}}}</div>
+		</script>
+
+		
+
+		<!-- widgets -->
+		<script id="template-widget-nullwidget" type="text/x-handlebars-tmpl">
+			<div></div>
+		</script>
+		<!-- 单行文本框 -->
+		<script id="template-widget-singletext" type="text/x-handlebars-tmpl">
+			<div class="fg clearfix">
+				<div class="fl">{{_property_title}}</div>
+				<div class="fe">
+					<input class="ui-input-text ui-corner-all ui-shadow-inset ui-body-c" type="text" value="{{text}}" />
+				</div>
+		  </div>
+		</script>
+		<!-- 风格选择 -->
+		<script id="template-widget-themeselect" type="text/x-handlebars-tmpl">
+			<div class="{{#if _property_title}}fg{{/if}} clearfix">
+				{{#if _property_title}}
+					<div class="fl"> {{_property_title}} </div>
+				{{/if}}
+				<div class="fe clearfix">
+					<select class="themes small">
+						{{#each themes}}
+							<option value="{{value}}"{{#if selected}} selected{{/if}}>{{key}}</option>
+						{{/each}}
+					</select>
+				</div>
+			</div>			
+		</script>
+		<script id="template-widget-themeselector" type="text/x-handlebars-tmpl">
+			<div class="{{#if _property_title}}fg{{/if}} clearfix">
+				{{#if _property_title}}
+					<div class="fl"> {{_property_title}} </div>
+				{{/if}}
+				<div class="fe clearfix">
+					<div class="theme-selector">
+						{{#each themes}}
+						<a href="javascript:;" class="theme-{{value}} {{#if selected}} selected{{/if}}" val="{{value}}" title="{{key}}"></a>
+						{{/each}}
+					</div>
+				</div>
+			</div>			
+		</script>
+		
+		<!--下拉菜单模板-->
+		<script id="template-widget-select" type="text/x-handlebars-tmpl">
+			<div class="{{#if _property_title}}fg{{/if}} clearfix">
+				{{#if _property_title}} 
+					<div class="fl"> {{_property_title}} </div>
+				{{/if}}
+				<div class="fe clearfix">
+					<select class="small">
+						{{#each options}}
+							<option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ text }}</option>
+						{{/each}}
+					</select>
+				</div>
+			</div>
+		</script>
+		
+		<!-- 按钮widget -->
+		<script id="template-widget-buttonlistitems" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl"> {{_property_title}} </div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#buttonlistitems_render items}}{{/buttonlistitems_render}}
+				</div>
+				<div class="fake add fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加按钮
+						</h3>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<!-- 子级按钮widget -->
+		<script id="sub-template-widget-buttonlistitems" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible">
+				<h3>{{text}}</h3>
+				<div class="content">
+					<div class="fl">
+						<label>文本</label>
+					</div>
+					<div class="fe">
+						<input placeholder="按钮文本" type="text" value="{{text}}" />
+					</div>
+					<div class="fl isActive">
+						<label>激活状态</label> {{{isActiveSelect}}}
+					</div>
+					<div class="fl">
+						<label>链接到:</label> {{{pageSelect}}}
+					</div>
+					<div class="fl">
+						<label>主题</label> {{{themeSelect}}}
+					</div>
+					<div class="fl">
+						<label>图标:</label> {{{iconSelect}}}
+					</div>
+					<div class="fe b-el-icons clearfix">
+						<a href="javascript:void(0);" class="remove standard-button l clearfix">
+							<div class="l"></div>
+							<div class="l-c"><div class="b-icon b-icon-delete"></div>删除按钮</div>
+							<div class="r"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</script>
+		<!-- 页面选择 -->
+		<script id="template-widget-pageselect" type="text/x-handlebars-tmpl">
+			<div class="{{#if _property_title}}fg{{/if}} clearfix">
+				{{#if _property_title}} 
+					<div class="fl"> {{_property_title}} </div>
+				{{/if}}
+				<div class="fe clearfix">
+					<div class="fw">
+						<select class="pages small">
+						{{#each pages}}
+							<option class="page" value="{{value}}" {{#if selected}}selected{{/if}}>{{key}}</option>
+						{{/each}}
+						</select>
+					</div>
+				</div>
+			</div>
+		</script>
+		<!-- icons图标选择 -->
+		<script id="template-widget-iconselect" type="text/x-handlebars-tmpl">
+			<div class="{{#if _property_title}}fg{{/if}} clearfix">
+			{{#if _property_title}}
+				<div class="fl"> {{_property_title}} </div>
+			{{/if}}
+				<div class="fe clearfix">
+				{{#if icons}}
+					<div class="l">
+						<select class="icons static">
+						{{#each icons}}
+							<option value="{{value}}" {{#if selected}}selected{{/if}}>{{key}}</option>
+						{{/each}}
+						</select>
+					</div>
+				{{/if}}
+				{{#if align}}
+					<div class="l radio-set">
+						<a href="javascript:void(0);" class='radio radio-left{{#ifequal align "left"}} selected{{/ifequal}}' data-align="left">
+							<div class="icon icon-align-left"></div>
+						</a>
+						<a href="javascript:void(0);" class='radio radio-center{{#ifequal align "top"}} selected{{/ifequal}}' data-align="top">
+							<div class="icon icon-align-top"></div>
+						</a>
+						<a href="javascript:void(0);" class='radio radio-center{{#ifequal align "bottom"}} selected{{/ifequal}}' data-align="bottom">
+							<div class="icon icon-align-bottom"></div>
+						</a>
+						<a href="javascript:void(0);" class='radio radio-right{{#ifequal align "right"}} selected{{/ifequal}}' data-align="right">
+							<div class="icon icon-align-right"></div>
+						</a>
+					</div>
+				{{/if}}
+				</div>
+			</div>
+		</script>
+		
+		<!-- 转场效果选择 -->
+		<script id="template-widget-transitionselect" type="text/x-handlebars-tmpl">
+			<div class="clearfix">
+				{{#if _property_title}}
+					<div class="fl">
+						{{_property_title}}
+					</div>
+				{{/if}}
+				<div class="fe clearfix">
+					<select class="transitions small">
+						{{#each transitions}}
+							<option value="{{value}}" {{#if selected}}selected{{/if}}>{{key}}</option>
+						{{/each}}
+					</select>
+				</div>
+			</div>
+		</script>
+		<!-- 列表 -->
+		<script id="template-widget-listitems" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl">
+						{{_property_title}}
+					</div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#listitems_render items}}{{/listitems_render}}
+				</div>
+				<div class="fake add-button fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加按钮
+						</h3>
+					</div>
+				</div>
+				<div class="fake add-divider fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加分栏
+						</h3>
+					</div>
+				</div>
+			</div>
+		</script>
+		<!-- 子级列表 -->
+		<script id="sub-template-widget-listitems" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible" data-isdivider="{{isDivider}}">
+				<h3>{{text}}</h3>
+				<div class="content">
+					{{#if isDivider}}
+						<div class="fl">
+							<label>文本</label>
+						</div>
+						<div class="fe">
+							<input placeholder="按钮文本" class="text" type="text" value="{{text}}" /> 
+						</div>
+						<div class="fe b-el-icons clearfix">
+							<a href="#" class="remove standard-button l clearfix">
+								<div class="l"></div>
+								<div class="l-c"><div class="b-icon b-icon-delete"></div>删除分栏</div>
+								<div class="r"></div>
+							</a>
+						</div>
+					{{else}}
+						<div class="fl">
+							<label>文本</label>
+						</div>
+						<div class="fe">
+							<input placeholder="按钮文本" class="text" type="text" value="{{text}}" /> 
+						</div>
+						<div class="fl">
+							<label>链接到:</label> {{{pageSelect}}}
+						</div>
+						<!--div class="fl">
+							<label>链接过渡效果:</label> {{{transitionSelect}}}
+						</div-->
+						<div class="fl">
+							<label>主题</label> {{{themeSelect}}}
+						</div>
+						<!--div class="fl">
+							<label>计数冒泡文本</label>
+						</div>
+						<div class="fe">
+							<input placeholder="" class="count" type="text" value="{{count}}" /> 
+						</div-->
+						<div class="fe b-el-icons clearfix">
+							<a href="#" class="remove standard-button l clearfix">
+								<div class="l"></div>
+								<div class="l-c"><div class="b-icon b-icon-delete"></div>删除按钮</div>
+								<div class="r"></div>
+							</a>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+		</script>
+		<!-- 可折叠文本控件 -->
+		<script id="template-widget-collapsiblesections" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl">
+						{{_property_title}}
+				  	</div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#collapsiblesections_render items}}
+					{{/collapsiblesections_render}}
+				</div>
+				<div class="fake add fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加按钮 
+						</h3>
+				  	</div>
+				</div>
+			</div>
+		</script>
+		<!-- 子级可折叠文本控件 -->
+		<script id="sub-template-widget-collapsiblesections" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible">
+				<h3>{{text}}</h3>
+				<div class="content clearfix">
+					<div class="fl">
+						<label>文本</label>
+					</div>
+					<div class="fe">
+						<input placeholder="按钮文本" type="text" value="{{text}}" /> 
+					</div>
+					<div class="fl is-collapsed">
+						<label>收缩：</label> {{{isCollapsedSelect}}}
+					</div>
+					<div class="fe b-el-icons clearfix">
+						<a href="#" class="remove standard-button l clearfix">
+						<div class="l"></div>
+						<div class="l-c"><div class="b-icon b-icon-delete"></div>删除按钮</div>
+						<div class="r"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<!-- 文本编辑器widget -->
+		<script id="template-widget-texteditor" type="text/x-handlebars-tmpl">			
+			<div>
+				<div class="l" style="width:350px; height:270px;"><textarea id="{{_wid}}">{{{text}}}</textarea></div>
+				<!--div class="r" style="width:150px; height:270px; border:1px solid #ccc; overflow:auto;" id="treepan"></div-->				
+			</div>
+		</script>
+		
+		<!--视频widget模板-->
+		<script id="template-widget-video" type="text/x-handlebars-tmpl">
+			{{#video_render video}}{{/video_render}}
+		</script>
+		<script id="sub-template-widget-video" type="text/x-handlebars-tmpl">
+			<div>
+				<div class="fg m-url video-url clearfix">
+					<div class="fl">视频地址</div>
+					<div class="fe"><input type="text" value="{{url}}"/><div class="m-uploader video-uploader"></div></div>
+				</div>
+				<ul class="m-upload-list video-upload-list qq-upload-list"></ul>
+				<div class="l m-tabs video-tabs">
+					<ul class="tabs-header">
+						<li class="active"><a href="javascript:void(0);">私有视频库</a></li>
+						<li><a href="javascript:void(0);">公共视频库</a></li>
+					</ul>
+					<div class="tabs-content">
+						<ul>
+							<!--<li><img src="/miiap/upload/images/img_20121015184404109.jpg" /></li>-->
+						</ul>
+					</div>
+					<div class="tabs-content hidden">
+						<ul></ul>
+					</div>
+				</div>
+				<div class="r m-settings video-settings">
+					<div class="video-width">
+						<div class="fl">宽度设置</div>
+						{{{widthSetting}}}
+					</div>
+					<!--屏蔽高度修改
+					<div class="video-height">
+						<div class="fl">高度设置</div>
+						{{{heightSetting}}}
+					</div>
+					-->
+					<!--因无法改变flash对齐方式和显示方式暂时屏蔽这两个属性
+					<div class="video-align">
+						<div class="fl">对齐方式</div>
+						{{{alignSelect}}}
+					</div>
+					<div class="video-display">
+						<div class="fl">显示方式</div>
+						{{{displaySelect}}}
+					</div>
+					-->
+															
+				</div>
+			</div>
+		</script>
+		
+		
+		<!--音频widget模板-->
+		<script id="template-widget-audio" type="text/x-handlebars-tmpl">
+			{{#audio_render audio}}{{/audio_render}}
+		</script>
+		<script id="sub-template-widget-audio" type="text/x-handlebars-tmpl">
+			<div>
+				<div class="fg m-url audio-url clearfix">
+					<div class="fl">音频地址</div>
+					<div class="fe"><input type="text" value="{{url}}"/><div class="m-uploader audio-uploader"></div></div>
+				</div>
+				<ul class="m-upload-list audio-upload-list qq-upload-list"></ul>
+				<div class="l m-tabs audio-tabs">
+					<ul class="tabs-header">
+						<li class="active"><a href="javascript:void(0);">私有音频库</a></li>
+						<li><a href="javascript:void(0);">公共音频库</a></li>
+					</ul>
+					<div class="tabs-content">
+						<ul>
+							<!--<li><img src="/miiap/upload/images/img_20121015184404109.jpg" /></li>-->
+						</ul>
+					</div>
+					<div class="tabs-content hidden">
+						<ul></ul>
+					</div>
+				</div>
+				<div class="r m-settings audio-settings">
+					<div class="audio-width">
+						<div class="fl">宽度设置</div>
+						{{{widthSetting}}}
+					</div>
+					<!--屏蔽高度修改
+					<div class="audio-height">
+						<div class="fl">高度设置</div>
+						{{{heightSetting}}}
+					</div>
+					-->
+					<!--因无法改变flash对齐方式和显示方式暂时屏蔽这两个属性
+					<div class="audio-align">
+						<div class="fl">对齐方式</div>
+						{{{alignSelect}}}
+					</div>
+					<div class="audio-display">
+						<div class="fl">显示方式</div>
+						{{{displaySelect}}}
+					</div>
+					-->
+															
+				</div>
+			</div>
+		</script>
+		
+		<!--图片widget模板-->
+		<script id="template-widget-image" type="text/x-handlebars-tmpl">
+			{{#image_render image}}{{/image_render}}
+		</script>
+		<script id="sub-template-widget-image" type="text/x-handlebars-tmpl">
+			<div>
+				<div class="fg m-url image-url clearfix">
+					<div class="fl">图片地址</div>
+					<div class="fe"><input type="text" value="{{url}}"/><div class="m-uploader image-uploader"></div></div>
+				</div>
+				<ul class="m-upload-list image-upload-list qq-upload-list"></ul>
+				<div class="l m-tabs image-tabs">
+					<ul class="tabs-header">
+						<li class="active"><a href="javascript:void(0);">图片库</a></li>
+						<!--li><a href="javascript:void(0);">公共图片库</a></li-->
+					</ul>
+					<div class="tabs-content">
+						<ul>
+							<!--<li><img src="/miiap/upload/images/img_20121015184404109.jpg" /></li>-->
+						</ul>
+					</div>
+					<div class="tabs-content hidden">
+						<ul></ul>
+					</div>
+				</div>
+				<div class="r m-settings image-settings">
+					<div class="image-width">
+						<div class="fl">宽度设置</div>
+						{{{widthSetting}}}
+					</div>
+					<div class="image-height">
+						<div class="fl">高度设置</div>
+						{{{heightSetting}}}
+					</div>
+					<div class="image-align">
+						<div class="fl">对齐方式</div>
+						{{{alignSelect}}}
+					</div>
+					<div class="image-display">
+						<div class="fl">显示方式</div>
+						{{{displaySelect}}}
+					</div>
+					<div class="image-link">
+						<div class="fl">链接到</div>
+						{{{linkSelect}}}
+					</div>										
+				</div>
+			</div>
+		</script>
+		
+		<!--像素模板-->
+		<script id="template-widget-pixelsize" type="text/x-handlebars-tmpl">
+			<div class="fg clearfix">
+				<div class="fl">{{_property_title}}</div>
+				<div class="fe">
+					<input type="text" value="{{value}}" size="6" class="val" /> <input type="radio" value="px" name="{{_wid}}-units" {{#ifequal units "px"}} checked{{/ifequal}}/> px <input type="radio" name="{{_wid}}-units" value="%"{{#ifequal units "%"}} checked{{/ifequal}}/> %
+				</div>
+		  	</div>
+		</script>
+		
+		<!-- 单选按钮widget -->
+		<script id="template-widget-radioitems" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl">
+					{{_property_title}}
+					</div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#radioitems_render items}}{{/radioitems_render}}
+				</div>
+				<div class="fake add fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加选项
+						</h3>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<!-- 二级单选按钮widget -->
+		<script id="sub-template-widget-radioitems" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible">
+				<h3>{{text}}</h3>
+				<div class="content">
+					<div class="fl">
+						<label>文本</label>
+					</div>
+					<div class="fe">
+						<input class="text" placeholder="按钮文本" type="text" value="{{text}}" /> 
+					</div>
+					<!--<div class="fl">
+						<label>值</label>
+					</div>
+					<div class="fe">
+						<input class="value" type="text" value="{{value}}" /> 
+					</div>-->
+					<div class="fe b-el-icons clearfix">
+						<a href="javascript:;" class="remove standard-button l clearfix">
+							<div class="l"></div>
+							<div class="l-c"><div class="b-icon b-icon-delete"></div>删除按钮</div>
+							<div class="r"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<!--地图控件widget-->
+		<script id="template-widget-mapmarker" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl">
+					{{_property_title}}
+					</div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#mapmarkers_render items}}{{/mapmarkers_render}}
+				</div>
+				<div class="fake add fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加标记
+						</h3>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script id="sub-template-widget-mapmarkers" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible">
+				<h3>{{location}}</h3>
+				<div class="content clearfix">
+					<div class="fl">
+						<label>位置</label>
+					</div>
+					<div class="fe">
+						<input placeholder="位置" type="text" class="location" value="{{location}}" /> 
+					</div>
+					<div class="fe b-el-icons clearfix">
+						<a href="#" class="remove standard-button l clearfix">
+							<div class="l"></div>
+							<div class="l-c">
+							<div class="b-icon b-icon-delete"></div>
+								删除标记 
+							</div>
+							<div class="r"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<script id="template-widget-tablecolumns" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="clearfix">
+					<div class="fl"> {{_property_title}} </div>
+				</div>
+				<div class="fg-accordion sortable clearfix">
+					{{#tablecolumns_render items}}{{/tablecolumns_render}}
+				</div>
+				<div class="fake add fg-accordion ui-accordion clearfix">
+					<div class="fg-collapsible">
+						<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+							<span class="bui-icon bui-icon-plus"></span>
+							添加列
+						</h3>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script id="sub-template-widget-tablecolumns" type="text/x-handlebars-tmpl">
+			<div class="fg-collapsible">
+				<h3>{{text}}</h3>
+				<div class="content">
+					<div class="fl">
+						<label>选择列</label>
+				  	</div>
+				  	<div class="fe">
+						{{{columnSelect}}} 
+				  	</div>
+				  	<div class="fe b-el-icons clearfix">
+						<a href="#" class="remove standard-button l clearfix">
+							<div class="l"></div>
+							<div class="l-c"><div class="b-icon b-icon-delete"></div>删除列</div>
+							<div class="r"></div>
+						</a>
+				  	</div>
+				</div>
+			</div>
+		</script>
+
+		<script id="template-widget-fontstyle" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				<div class="fl"> {{_property_title}} </div>
+				<div class="fe fontstyle">
+					<a href="javascript:;" class='font-weight {{#ifequal fontWeight "bold"}}selected{{/ifequal}}'><span class="icon"></span></a>
+					<a href="javascript:;" class='font-style {{#ifequal fontStyle "italic"}}selected{{/ifequal}}'><span class="icon"></span></a>
+					<a href="javascript:;" class='text-decoration {{#ifequal textDecoration "underline"}}selected{{/ifequal}}'><span class="icon"></span></a>
+					<a href="javascript:;" class="font-color"><span class="icon"></span><div class="color-preview" style="background-color:{{fontColor}}" val="{{fontColor}}"></div><div class="arrow"></div></a>
+				</div>
+			</div>
+		</script>
+
+		<script id="template-widget-marginsettings" type="text/x-handlebars-tmpl">
+			<div class="fg clearfix">
+				<div class="fl" style="line-height:{{#if inline}}18{{else}}43{{/if}}px;"> {{_property_title}} </div>
+				<div class="fe margin-settings">
+					<ul>
+						{{#if inline}}
+						<li>
+							<div class="icon margin-top"></div>
+							<input type="text" name="top" value="{{top}}" maxlength="3"/>
+							<div class="icon margin-bottom"></div>
+							<input type="text" name="bottom" value="{{bottom}}" maxlength="3"/>
+							<div class="icon margin-left"></div>
+							<input type="text" name="left" value="{{left}}" maxlength="3"/>
+							<div class="icon margin-right"></div>
+							<input type="text" name="right" value="{{right}}" maxlength="3"/>
+						</li>
+						{{else}}
+						<li>
+							<div class="icon margin-top"></div>
+							<input type="text" name="top" value="{{top}}" maxlength="3"/>
+							<div class="icon margin-bottom"></div>
+							<input type="text" name="bottom" value="{{bottom}}" maxlength="3"/>
+						</li>
+						<li class="last">
+							<div class="icon margin-left"></div>
+							<input type="text" name="left" value="{{left}}" maxlength="3"/>
+							<div class="icon margin-right"></div>
+							<input type="text" name="right" value="{{right}}" maxlength="3"/>
+						</li>
+						{{/if}}
+					</ul>
+				</div>
+			</div>
+		</script>
+
+		<script id="template-widget-htmlsource" type="text/x-handlebars-tmpl">
+			<div class="fg">
+				{{_property_title}}
+			</div>
+			<div class="fg">
+				<textarea>{{htmlsource}}</textarea>
+			</div>
+		</script>	
+
+		
+		<!-- templates end -->
+
+		<iframe src="pageViewer.html" name="" id="pageViewer" style="position:absolute;left:-1000px;top:-1000px;width:320px;height:480px;"></iframe>
+
+
+		<script src="js/ext/jquery-1.7.2.min.js"></script>
+		<script src="js/ext/jquery-ui-1.8.23.custom.min.js"></script>				
+		<script src="js/ext/jquery.filterselector.min.js?v=201301181437"></script>
+		<script src="js/ext/jquery.box.min.js?v=201301061400"></script>
+		<script src="js/ext/mCustomScrollbar/jquery.mousewheel.min.js"></script>
+		<script src="js/ext/mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
+		
+		<script src="js/ext/tiny_mce/tiny_mce.js"></script>
+		<script src="js/ext/keymaster.min.js"></script>
+		<script src="js/ext/handlebars-1.0.0.beta.6.min.js"></script>
+		<script src="js/ext/underscore.min.js"></script>
+		<script src="js/ext/backbone.min.js"></script>
+		
+		<script src="js/ext/fileuploader/fileuploader.min.js?v=201307181659"></script>
+
+		<script>
+		/* regist helper for handlebars */
+		Handlebars.registerHelper("property", function(a, b) {
+			if (a.property.getValue() !== a.property.getDefaultValue()) return b(this)
+		}),
+		Handlebars.registerHelper("ifless", function(a, b, c) {
+			return a < b ? c() : c.inverse(this)
+		}),
+		Handlebars.registerHelper("ifgreater", function(a, b, c) { 
+			return a > b ? c(this) : c.inverse(this)
+		}),
+		Handlebars.registerHelper("ifequal", function(a, b, c) {
+			return a === b ? c(this) : c.inverse(this)
+		}),
+		Handlebars.registerHelper("ifemptystring", function(a, b) {
+			return a === "" || $.trim(a) === "" ? b(this) : b.inverse(this)
+		}),
+		Handlebars.registerHelper("ifempty", function(a, b) {
+			return a.length === 0 ? b(this) : b.inverse(this)
+		});
+		</script>
+
+		<script>
+		//var DEBUG = window.console ? !0 : !1;
+		if (false) {
+			window.console || (window.console = {});
+			var methods = ["log", "debug", "warn", "info", "error"];
+			for (var i = 0; i < methods.length; i++) window.console[methods[i]] = function() {}
+		}
+		</script>
+
+		<script src="js/settings.js?v=201303201707"></script>
+		<script src="js/modules/layout.js?v=201301061400"></script>
+		<script src="js/modules/inputfilter.js?v=201301061400"></script>		
+		<script src="js/modules/widget.js?v=201303201707"></script>
+		<script src="js/modules/property.js?v=201301281349"></script>
+		<script src="js/modules/control.js?v=201303201730"></script>
+		<script src="js/modules/controlfactory.js?v=201303201707"></script>
+		<script src="js/modules/userview.js?v=201303201707"></script>
+		<script src="js/app.js?v=201303201707"></script>
+		
+		<script>		
+		jQuery(function($){
+
+			var $msgBox, app;
+
+			if( $.browser.msie ){
+				$msgBox = $("#msgBox"),
+				$msgBox.show(),
+				setTimeout(function(){
+					$msgBox.hide()
+				}, 5 * 1000)
+			}
+		
+			app = window.App = new Builder;
+			app.bind("appInited", function(){
+			
+				// var a = Utils.getQueryParameter("operateType");
+				// if(a == "" || a == "1" || a == "2"){//新增、复制
+				// 	$("#header .btn-pageinfo").trigger("click")
+				// }else if(a == "3"){//修改
+				// 	App.loadApp()
+				// }
+
+				app.trigger("appLoading"), 
+				app.openFromObject({
+					doc: {
+						type: "app",
+						id: "10001",
+						properties: {},
+						children: []
+					}
+				}),
+				app.trigger("appLoaded")
+								
+			});
+			
+		});
+		</script>
+		
+    </body>			
+</html>

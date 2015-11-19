@@ -1,0 +1,13 @@
+<project name="js.device.build" default="compress" basedir="../">
+    <description>js.build for ANT</description>
+	<property name="lib" location="compress" />
+    <property name="src" location="js" />
+    <property name="target" location="js" />
+    <property name="charset" value="utf-8"/>
+
+    <target name="compress">
+        <java jar="${lib}/yuicompressor.jar" fork="true">
+            <arg line="--type js --charset ${charset} ${src}/device.js -o ${target}/device.min.js"/>
+        </java>
+    </target>
+</project>

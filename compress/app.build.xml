@@ -1,0 +1,50 @@
+<project name="js.app.build" default="clean" basedir="../">
+    <description>js.build for ANT</description>
+	<property name="lib" location="compress" />
+    <property name="src" location="js" />
+    <property name="target" location="js" />
+    <property name="charset" value="utf-8"/>
+
+    <target name="concat">
+        <concat destfile="${target}/tmp.js" encoding="${charset}" outputencoding="${charset}">
+        	<!--
+        	<script src="js/settings.js?v=201303201707"></script>
+			<script src="js/modules/layout.js?v=201301061400"></script>
+			<script src="js/modules/inputfilter.js?v=201301061400"></script>		
+			<script src="js/modules/widget.js?v=201303201707"></script>
+			<script src="js/modules/property.js?v=201301281349"></script>
+			<script src="js/modules/control.js?v=201303201730"></script>
+			<script src="js/modules/controlfactory.js?v=201303201707"></script>
+			<script src="js/modules/userview.js?v=201303201707"></script>
+			<script src="js/app.js?v=201303201707"></script>
+        	 -->
+        	<path path="${src}/settings.js" />
+        	<path path="${src}/modules/layout.js" />
+			<path path="${src}/modules/inputfilter.js" />
+			<path path="${src}/modules/widget.js" />
+			<path path="${src}/modules/property.js" />
+			<path path="${src}/modules/control.js" />
+			<path path="${src}/modules/controlfactory.js" />
+			<path path="${src}/modules/userview.js" />
+			<path path="${src}/app.js" />
+        </concat>
+    </target>
+
+    <target name="compress" depends="concat">
+        <java jar="${lib}/yuicompressor.jar" fork="true">
+            <arg line="--type js --charset ${charset} ${target}/tmp.js -o ${target}/app.min.js"/>
+        </java>
+    </target>
+	
+	<target name="replace" depends="compress">
+		<replaceregexp byline="true" encoding="${charset}">
+			<regexp pattern="[,]?console\.log\([^)]+\)[,;]?"/>
+			<substitution expression=";"/>
+			<fileset dir="${target}" includes="tmp.js"/>
+		</replaceregexp>
+	</target>
+
+    <target name="clean" depends="compress">
+        <delete file="${target}/tmp.js"/>
+    </target>
+</project>

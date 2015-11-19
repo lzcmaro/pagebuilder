@@ -1,0 +1,28 @@
+div[data-role=content]{min-height:300px;}
+object{z-index:1;position:relative;}
+.target-tester{background-color:red;height:30px;opacity:0.5;position:absolute;width:320px;z-index:100;}
+.cfwx-control.selected{border:1px dashed #EEE!important;}
+.cfwx-click-target{background-color:red;height:100%;position:absolute;width:100%;}
+.highlight-shim{border:1px solid #0E0;height:30px;width:100%;}
+.shim{border:1px dotted #91C4DF;border-radius:3px 3px 3px 3px;}
+.highlight{border:1px solid #91C4DF;border-radius:3px 3px 3px 3px;position:absolute;z-index:1001;}
+.highlight-selector{border:1px solid #009FF2;background:url(../images/transparent.png);border-radius:3px 3px 3px 3px;cursor:move;position:absolute;z-index:1002;}
+.highlight-selector.noborder,.highlight.noborder{border:0 none;}
+.highlight-selector .content{height:100%;position:relative;width:100%;}
+.buttons{background-color:#EEE;border:1px solid #999;border-radius:5px 5px 5px 5px;bottom:-14px;height:14px;position:absolute;right:10px;z-index:1002;padding:5px 0 5px 5px;}
+.buttons .c-icon{display:block;float:left;margin-right:5px;}
+.c-icon{background:url(../images/icons_sprite.png) no-repeat scroll 0 0 transparent;}
+.c-icon-plus{background-position:-84px 0;height:15px;width:14px;}
+.c-icon-close{background-position:-70px -15px;height:15px;width:14px;}
+.ui-sortable{border-width:1px;}
+form{min-height:40px;}
+.design form{border:1px dotted #AAA;}
+.design .ui-block-a,.design .ui-block-b,.design .ui-block-c,.design .ui-block-d,.design .ui-block-e{box-shadow:0 0 2px #000 inset;border:1px solid #999999 \9;min-height:60px;}
+.design .content-secondary,.design .content-primary{border:1px dotted #AAA;min-height:200px;}
+.design .ui-header-fixed{position:static;}
+.design .ui-footer-fixed{/* position:relative; */}
+.design .ui-navbar.ui-footer-fixed{position:fixed;}
+.ui-mobile .design .ui-page{padding-bottom:0!important;padding-top:0!important;}
+.ui-mobile .design .ui-page.ui-page-footer-fixed{padding-bottom:3em!important;}
+.ui-grid-solo .ui-block-a,.ui-grid-solo .ui-block-b,.ui-grid-solo .ui-block-c,.ui-grid-solo .ui-block-d,.ui-grid-solo .ui-block-e,.ui-navbar .ui-block-a,.ui-navbar .ui-block-b,.ui-navbar .ui-block-c,.ui-navbar .ui-block-d,.ui-navbar .ui-block-e{box-shadow:none;min-height:1px;}
+.ui-btn-inner .ui-btn-text{font-size:14px;}
